@@ -18,9 +18,6 @@
 const { installNetworkGuard } = require("./networkGuard");
 
 module.exports = {
-  /** CloudFree disables the upstream auto-updater. */
-  disableAutoUpdater: true,
-
   /**
    * Called at the very start of startApp(), before any windows are created.
    * Installs the network guard on the default session.

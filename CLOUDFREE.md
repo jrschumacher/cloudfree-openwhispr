@@ -131,6 +131,31 @@ export default CloudFreeSupportDropdown;
 // Button:    {t("sidebar.learnMore")}           → Visit OpenWhispr
 ```
 
+**Remove the account/sign-in section at the bottom of the sidebar** (the divider + user avatar/name/email block). Replace with:
+```tsx
+{/* CloudFree: hide account section — no upstream auth */}
+```
+
+### `src/updater.js` (2 lines changed)
+
+**In `setupAutoUpdater()`, change the `setFeedURL` owner/repo values:**
+```js
+autoUpdater.setFeedURL({
+  provider: "github",
+  owner: "jrschumacher",        // was: "OpenWhispr"
+  repo: "cloudfree-openwhispr",  // was: "openwhispr"
+  private: false,
+});
+```
+
+### `electron-builder.json` (+2 lines)
+
+**Add to the `files` array (before the `!node_modules` exclusions):**
+```json
+"src/cloudfree/**/*",
+"allowlist.json",
+```
+
 ### `src/index.html` (-3 lines, +1 line)
 
 **Replace the 3 Google Fonts CDN lines with:**

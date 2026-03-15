@@ -1,14 +1,5 @@
 const { autoUpdater } = require("electron-updater");
 
-// CloudFree: disable auto-updater when the fork flag is set
-let cloudfreeDisabled = false;
-try {
-  const cloudfree = require("./cloudfree/hooks");
-  cloudfreeDisabled = !!cloudfree.disableAutoUpdater;
-} catch {
-  // Not a CloudFree build — continue normally
-}
-
 class UpdateManager {
   constructor() {
     this.mainWindow = null;
@@ -20,11 +11,8 @@ class UpdateManager {
     this.isDownloading = false;
     this.eventListeners = [];
     this.updateCheckInterval = null;
-    this.disabled = cloudfreeDisabled;
 
-    if (!this.disabled) {
-      this.setupAutoUpdater();
-    }
+    this.setupAutoUpdater();
   }
 
   setWindows(mainWindow, controlPanelWindow) {
@@ -42,8 +30,8 @@ class UpdateManager {
     // Configure auto-updater for GitHub releases
     autoUpdater.setFeedURL({
       provider: "github",
-      owner: "OpenWhispr",
-      repo: "openwhispr",
+      owner: "jrschumacher",
+      repo: "cloudfree-openwhispr",
       private: false,
     });
 
@@ -298,7 +286,7 @@ class UpdateManager {
       return {
         updateAvailable: this.updateAvailable,
         updateDownloaded: this.updateDownloaded,
-        isDevelopment: process.env.NODE_ENV === "development" || this.disabled,
+        isDevelopment: process.env.NODE_ENV === "development",
       };
     } catch (error) {
       console.error("❌ Error getting update status:", error);
@@ -316,7 +304,7 @@ class UpdateManager {
   }
 
   checkForUpdatesOnStartup() {
-    if (process.env.NODE_ENV !== "development" && !this.disabled) {
+    if (process.env.NODE_ENV !== "development") {
       setTimeout(() => {
         console.log("🔄 Checking for updates on startup...");
         autoUpdater.checkForUpdates().catch((err) => {
