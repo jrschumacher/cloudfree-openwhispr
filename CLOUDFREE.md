@@ -27,6 +27,20 @@ All upstream UI components remain intact. CloudFree injects behavior through imp
 | `src/assets/fonts/NotoSans-*.woff2` | Bundled font files (4 files, ~430KB total) |
 | `scripts/cloudfree/scan-network-calls.js` | Static analysis script to find network URLs in codebase |
 | `.github/workflows/cloudfree-upstream-sync.yml` | Daily upstream sync workflow with network scan |
+| `.github/workflows/cloudfree-release.yml` | Combined release-please + multi-platform build pipeline |
+| `release-please-config.json` | Release-please configuration (conventional commits → changelog) |
+| `.release-please-manifest.json` | Release-please version tracker |
+
+## Disabled Upstream Workflows
+
+These upstream workflows are kept in the repo to minimize merge conflicts but are disabled (trigger changed to manual-only with a note):
+
+| Workflow | Why disabled |
+|----------|-------------|
+| `.github/workflows/build-and-notarize.yml` | Replaced by `cloudfree-release.yml` — uses upstream's signing secrets which we don't have |
+| `.github/workflows/release.yml` | Replaced by `cloudfree-release.yml` — release-please handles versioning and tagging |
+
+After an upstream merge, if these files have conflicts, accept upstream's version and re-add the disabled trigger block at the top.
 
 ## Upstream File Modifications
 

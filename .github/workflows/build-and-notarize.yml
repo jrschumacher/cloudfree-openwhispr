@@ -1,19 +1,13 @@
 name: Build and Notarize
 
+# CloudFree: disabled — replaced by cloudfree-release.yml
+# Kept in repo to avoid merge conflicts with upstream.
 on:
-  push:
-    branches: [main, develop]
-    paths-ignore:
-      - "**.md"
-      - "LICENSE"
-      - ".github/ISSUE_TEMPLATE/**"
-  pull_request:
-    branches: [main]
-    paths-ignore:
-      - "**.md"
-      - "LICENSE"
-      - ".github/ISSUE_TEMPLATE/**"
   workflow_dispatch:
+    inputs:
+      _unused:
+        description: "This workflow is disabled. Use CloudFree Release instead."
+        required: false
 
 jobs:
   build-linux:
