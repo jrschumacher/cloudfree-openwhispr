@@ -22,7 +22,8 @@ jobs:
         run: npm install --ignore-scripts
 
       - name: Lint
-        run: npx eslint src/cloudfree/
+        working-directory: src
+        run: npx eslint cloudfree/
 
       - name: Test
         run: npx vitest run src/cloudfree/
