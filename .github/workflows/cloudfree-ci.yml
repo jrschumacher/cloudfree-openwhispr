@@ -1,0 +1,32 @@
+name: CloudFree CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm install --force
+
+      - name: Install tinyexec
+        run: npm install tinyexec --force
+
+      - name: Lint
+        working-directory: src
+        run: npx eslint cloudfree/
+
+      - name: Test
+        run: npx vitest run src/cloudfree/

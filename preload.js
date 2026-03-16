@@ -1,4 +1,5 @@
 const { contextBridge, ipcRenderer, webUtils } = require("electron");
+const cloudfree = require("./src/cloudfree/hooks");
 
 /**
  * Helper to register an IPC listener and return a cleanup function.
@@ -658,4 +659,7 @@ contextBridge.exposeInMainWorld("electronAPI", {
     "navigate-to-meeting-note",
     (callback) => (_event, data) => callback(data)
   ),
+
+  // CloudFree hooks
+  ...cloudfree.preload(ipcRenderer),
 });
