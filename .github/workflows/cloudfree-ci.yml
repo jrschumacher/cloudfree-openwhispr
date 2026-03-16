@@ -19,7 +19,7 @@ jobs:
           cache: "npm"
 
       - name: Install dependencies
-        run: npm install --legacy-peer-deps
+        run: npm install --legacy-peer-deps --include=dev --include=optional
 
       - name: Lint
         working-directory: src
